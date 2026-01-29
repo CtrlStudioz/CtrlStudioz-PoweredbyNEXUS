@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CtrlStudio | Freelance Services</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional IoT & Embedded Systems Developer specializing in Arduino, ESP32, IoT solutions, and custom web applications. Hire for your next smart project.">
+    <meta name="keywords" content="IoT Developer, Embedded Systems, Arduino, ESP32, Web Applications, Freelance, Smart Devices, Home Automation">
+    <meta name="author" content="Your Name">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slides.active {
+            display: block;
+        }
+
+        /* Slideshow Controls */
+        .slideshow-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #10b981;
+            transform: scale(1.2);
+        }
+
+        /* Slideshow Navigation Arrows */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev {
+            left: 15px;
+        }
+
+        .next {
+            right: 15px;
+        }
+
+        /* Slideshow Counter */
+        .slideshow-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        :root {
+            --primary: #10b981;  /* Emerald green - tech/iot theme */
+            --secondary: #3b82f6; /* Blue */
+            --accent: #8b5cf6;   /* Purple */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Dark blue-gray */
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .code-font {
+            font-family: 'Source Code Pro', monospace;
+        }
+        
+        /* Tech-themed background pattern */
+        .tech-bg {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Circuit board pattern */
+        .circuit-bg {
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #4b5563 79px, #4b5563 81px, transparent 81px),
+                linear-gradient(#374151 .1em, transparent .1em);
+            background-size: 100% 1.2em;
+        }
+        
+        /* Glowing effect for tech elements */
+        .glow {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+        }
+        
+        /* Terminal window styling */
+        .terminal {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            font-family: 'Source Code Pro', monospace;
+        }
+        
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 12px;
+            height: 12px;
+            background: #ff5f56;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27ca3f;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        /* Animation for blinking cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        /* Service card hover effect */
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Particle container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Typewriter effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--primary);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary); }
+        }
+    </style>
+</head>
+<body class="tech-bg">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-slate-900/90 backdrop-blur-md shadow-sm border-b border-slate-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-white">
+                    <span class="text-primary"><i class="fas fa-microchip mr-2"></i>Ctrl</span>Studioz
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-slate-300 hover:text-primary transition-colors">Home</a>
+                    <a href="#services" class="text-slate-300 hover:text-primary transition-colors">Services</a>
+                    <a href="#projects" class="text-slate-300 hover:text-primary transition-colors">Projects</a>
+                    <a href="#skills" class="text-slate-300 hover:text-primary transition-colors">Skills</a>
+                    <a href="#contact" class="text-slate-300 hover:text-primary transition-colors">Contact</a>
+                    <a href="#hire" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-emerald-700 transition-colors">Hire Me</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden text-slate-300">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+   <!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-slate-900 shadow-lg md:hidden border-l border-slate-700 z-50">
+    <div class="p-6 bg-slate-900 h-full">
+        <div class="flex justify-between items-center mb-8">
+            <span class="text-xl font-bold text-white">Menu</span>
+            <button id="closeMenuBtn" class="text-slate-300 hover:text-white bg-slate-700 hover:bg-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-3">
+            <a href="#home" class="text-slate-800 hover:text-white bg-slate-200 hover:bg-slate-600 px-4 py-3 rounded-lg transition-colors">Home</a>
+            <a href="#services" class="text-slate-800 hover:text-white bg-slate-200 hover:bg-slate-600 px-4 py-3 rounded-lg transition-colors">Services</a>
+            <a href="#projects" class="text-slate-800 hover:text-white bg-slate-200 hover:bg-slate-600 px-4 py-3 rounded-lg transition-colors">Projects</a>
+            <a href="#skills" class="text-slate-800 hover:text-white bg-slate-200 hover:bg-slate-600 px-4 py-3 rounded-lg transition-colors">Skills</a>
+            <a href="#contact" class="text-slate-800 hover:text-white bg-slate-200 hover:bg-slate-600 px-4 py-3 rounded-lg transition-colors">Contact</a>
+            <a href="#hire" class="px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors text-center font-medium">Hire Me</a>
+        </div>
+    </div>
+</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center relative overflow-hidden pt-20">
+        <div id="particles-js"></div>
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 mb-12 lg:mb-0" data-aos="fade-right">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-900/30 text-emerald-300 mb-4">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
+                        Available for Freelance Work
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                        Building <span class="text-primary typewriter">Smart IoT Solutions</span>
+                    </h1>
+                    
+                    <h2 class="text-2xl md:text-3xl text-slate-300 mb-6 code-font">
+                        <span class="text-secondary">Arduino</span> • <span class="text-accent">ESP32</span> • <span class="text-primary">Web Apps</span>
+                    </h2>
+                    
+                    <p class="text-lg text-slate-400 mb-8 max-w-xl">
+                        Bridging the gap between software and hardware. Specializing in Custom Web Applications, Embedded Systems (Arduino/ESP32), and scalable IoT Solutions. At CtrlStudioz, we turn complex ideas into connected realities.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#contact" class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium glow">
+                            <i class="fas fa-comment-dots mr-2"></i>Start a Project
+                        </a>
+                        <a href="#projects" class="px-8 py-3 border-2 border-primary text-emerald-400 rounded-lg hover:bg-slate-800 transition-colors font-medium">
+                            <i class="fas fa-code-branch mr-2"></i>View Projects
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-8">
+                        <div>
+                            <p class="text-2xl font-bold text-primary">10+</p>
+                            <p class="text-sm text-slate-400">Projects Completed</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-secondary">8+</p>
+                            <p class="text-sm text-slate-400">Happy Clients</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-accent">4+</p>
+                            <p class="text-sm text-slate-400">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 flex justify-center" data-aos="fade-left">
+                    <div class="relative">
+                        <div class="w-80 h-80 md:w-96 md:h-96 rounded-2xl overflow-hidden border-4 border-slate-800 shadow-2xl glow">
+                            <img src="img/logo.png" 
+                                 alt="IoT Developer Workspace" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-primary text-white p-6 rounded-xl shadow-lg">
+                            <div class="text-center">
+                                <i class="fas fa-bolt text-2xl mb-2"></i>
+                                <p class="text-sm">Real-time IoT</p>
+                                <p class="text-sm">Solutions</p>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -left-4 bg-secondary text-white p-6 rounded-xl shadow-lg">
+                            <div class="text-center">
+                                <i class="fas fa-cloud text-2xl mb-2"></i>
+                                <p class="text-sm">Cloud</p>
+                                <p class="text-sm">Integration</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-slate-800/50 circuit-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">My Services</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    End-to-end IoT and embedded systems solutions tailored to your specific needs.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1: IoT Development -->
+                <div class="service-card bg-slate-800 rounded-xl p-8" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-emerald-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-wifi text-emerald-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">IoT Development</h3>
+                    <p class="text-slate-400 mb-6">
+                        Custom IoT solutions using Arduino, ESP32. Sensor integration, wireless communication, and cloud connectivity.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            Smart Home Automation
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            Environmental Monitoring
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+                            Industrial IoT Solutions
+                        </li>
+                    </ul>
+                    <!-- <div class="text-primary font-medium">Starting at $500</div> -->
+                </div>
+                
+                <!-- Service 2: Embedded Systems -->
+                <div class="service-card bg-slate-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Embedded Systems</h3>
+                    <p class="text-slate-400 mb-6">
+                        Hardware design, firmware development, and low-level programming for custom embedded solutions.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Prototype Development
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Firmware Development
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-blue-500 mr-2"></i>
+                            Sensor Integration
+                        </li>
+                    </ul>
+                    <!-- <div class="text-secondary font-medium">Starting at $750</div> -->
+                </div>
+                
+                <!-- Service 3: Web Applications -->
+                <div class="service-card bg-slate-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-purple-900/30 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Web Applications</h3>
+                    <p class="text-slate-400 mb-6">
+                        Custom web dashboards, APIs, and control panels for your IoT devices. Real-time data visualization and management.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            IoT Dashboards
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            RESTful APIs
+                        </li>
+                        <li class="flex items-center text-slate-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-2"></i>
+                            Real-time Data
+                        </li>
+                    </ul>
+                    <!-- <div class="text-accent font-medium">Starting at $400</div> -->
+                </div>
+            </div>
+            
+            <!-- Additional Services -->
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-right">
+                    <h3 class="text-xl font-bold text-white mb-4">Consultation & Training</h3>
+                    <p class="text-slate-400 mb-6">
+                        Need guidance on your IoT project? I offer consultation services.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <!-- <span class="text-primary font-medium">$100/hour</span> -->
+                        <a href="#contact" class="text-primary hover:underline">Book a Session</a>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-left">
+                    <h3 class="text-xl font-bold text-white mb-4">Maintenance & Support</h3>
+                    <p class="text-slate-400 mb-6">
+                        Ongoing maintenance, updates, and technical support for your deployed IoT solutions and web applications.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <!-- <span class="text-primary font-medium">Monthly Plans</span> -->
+                        <a href="#contact" class="text-primary hover:underline">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Featured Projects</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                     Showcasing my hands-on projects that deliver smart, reliable, and scalable solutions for environmental monitoring, precision agriculture, and aquaculture systems using IoT and embedded technologies.
+                </p>
+            </div>
+            
+            <div class="space-y-24">
+                <!-- Project 1: GreenWard -->
+                <div class="grid md:grid-cols-2 gap-8 items-center project-greenward" data-aos="fade-up">
+                    <div class="order-1 md:order-1">
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl group">
+                            <!-- Slideshow Container -->
+                            <div class="aspect-video bg-gradient-to-br from-emerald-900 to-slate-900 relative overflow-hidden rounded-xl">
+                                <!-- Slideshow -->
+                                <div class="slideshow-container">
+                                    <!-- Slide 1 (Video Thumbnail) -->
+                                    <div class="slides active">
+                                        <div class="relative w-full h-full">
+                                            <!-- Video Thumbnail Image -->
+                                            <img src="projects/greenward1.jpg" 
+                                                alt="GreenWard Project" 
+                                                class="w-full h-full object-cover">
+                                            
+                                            <!-- Video Play Button Overlay -->
+                                            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/40 via-transparent to-transparent cursor-pointer">
+                                                <div onclick="playGreenwardVideo()" 
+                                                    class="play-button w-16 h-16 bg-emerald-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-emerald-600 hover:scale-110 transition-all duration-300">
+                                                    <i class="fas fa-play text-white text-2xl ml-1"></i>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Video Duration Badge -->
+                                            <div class="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                                                <i class="fas fa-play-circle mr-1"></i> Watch Demo
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Slide 2 -->
+                                    <div class="slides">
+                                        <img src="projects/greenward2.jpg" 
+                                            alt="GreenWard Hardware" 
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Slide 3 -->
+                                    <div class="slides">
+                                        <img src="projects/greenward3.jpg" 
+                                            alt="GreenWard Dashboard" 
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Slide 4 -->
+                                    <div class="slides">
+                                        <img src="projects/greenward4.jpg" 
+                                            alt="GreenWard Sensors" 
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Navigation Arrows -->
+                                    <button class="prev" onclick="changeSlide('greenward', -1)">❮</button>
+                                    <button class="next" onclick="changeSlide('greenward', 1)">❯</button>
+                                    
+                                    <!-- Dots/Indicators -->
+                                    <div class="slideshow-controls">
+                                        <span class="dot active" onclick="currentSlide('greenward', 0)"></span>
+                                        <span class="dot" onclick="currentSlide('greenward', 1)"></span>
+                                        <span class="dot" onclick="currentSlide('greenward', 2)"></span>
+                                        <span class="dot" onclick="currentSlide('greenward', 3)"></span>
+                                    </div>
+                
+                                    <!-- Counter -->
+                                    <div class="slideshow-counter">
+                                        <span id="greenward-counter">1</span>/4
+                                    </div>
+                                </div>
+            
+                            </div>
+        
+                            <!-- Project Stats -->
+                            <div class="grid grid-cols-3 gap-4 mt-6">
+                                <div class="text-center p-4 bg-slate-800 rounded-xl">
+                                    <i class="fas fa-viruses text-emerald-400 text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium text-slate-300">Multi-Sensor</p>
+                                </div>
+                                <div class="text-center p-4 bg-slate-800 rounded-xl">
+                                    <i class="fas fa-broadcast-tower text-blue-400 text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium text-slate-300">LoRa Network</p>
+                                </div>
+                                <div class="text-center p-4 bg-slate-800 rounded-xl">
+                                    <i class="fas fa-bell text-red-400 text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium text-slate-300">Real-time Alerts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-2 md:order-2">
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-900/30 to-emerald-800/20 text-emerald-300 mb-4">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                            IoT • Forest Protection • Real-time Monitoring
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">GreenWard (TerraVerde): IoT Forest Protection System</h3>
+                        <p class="text-slate-400 mb-6">
+                            An IoT-powered system designed to prevent illegal logging and detect forest fires in real-time. Uses sound, smoke, and fire sensors with LoRa transmission to remote monitoring stations.
+                        </p>
+                        
+                        <!-- Key Features -->
+                        <div class="mb-6">
+                            <h4 class="font-bold text-white mb-3">Key Features:</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-volume-up text-emerald-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">Sound detection for illegal logging activities with real-time alerts</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-fire text-red-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">Early fire detection with smoke and temperature sensors</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-satellite text-blue-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">GPS location tracking for precise incident mapping</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sms text-purple-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">SMS alerts via SIM800L GSM module to authorities</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-broadcast-tower text-cyan-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">LoRa long-range communication for remote forest areas</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-tachometer-alt text-yellow-500 mt-1 mr-3"></i>
+                                    <span class="text-slate-300">Real-time web dashboard with live location tracking</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-8">
+                             <span class="px-3 py-1.5 bg-yellow-900/30 text-yellow-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-solar-panel mr-2"></i>Solar Powered
+                            </span>
+
+                            <span class="px-3 py-1.5 bg-blue-900/30 text-blue-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-wifi mr-2"></i>LoRa SX1278
+                            </span>
+                            <span class="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fab fa-node-js mr-2"></i>Node.js
+                            </span>
+                            <span class="px-3 py-1.5 bg-cyan-900/30 text-cyan-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-database mr-2"></i>NoSQL
+                            </span>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-4">
+                           <button onclick="playGreenwardVideo()" 
+                                    class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium inline-flex items-center">
+                                <i class="fas fa-play-circle mr-2"></i> Watch Demo
+                            </button>
+
+                            <a href="https://www.facebook.com/share/p/1CCWEzvnxZ/" 
+                            target="_blank"
+                            class="px-5 py-2.5 border-2 border-[#2D88FF] text-[#2D88FF] rounded-lg hover:bg-slate-800 transition-colors font-medium inline-flex items-center">
+                                <i class="fab fa-facebook mr-2"></i> View on Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2: AquaTech -->
+                 
+                <div class="grid md:grid-cols-2 gap-8 items-center project-aquatech" data-aos="fade-up">
+                    <div class="order-1 md:order-1">
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl group">
+                            <!-- Slideshow Container -->
+                             
+                            <div class="aspect-video bg-gradient-to-br from-cyan-900 to-slate-900 relative overflow-hidden rounded-xl">
+                                <!-- Slideshow -->
+                                <div class="slideshow-container" id="aquatech-slides">
+                                    <!-- Slide 1 (Video Thumbnail) -->
+                                    <div class="slides active">
+                                        <div class="relative w-full h-full">
+                                            <!-- Video Thumbnail Image -->
+                                            <img src="projects/aqua1.png" 
+                                                 alt="AquaTech Project" 
+                                                 class="w-full h-full object-cover">
+                                            
+                                            <!-- Video Play Button Overlay -->
+                                            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/40 via-transparent to-transparent cursor-pointer">
+                                                <div onclick="playAquatechVideo()" 
+                                                     class="play-button w-16 h-16 bg-cyan-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-cyan-600 hover:scale-110 transition-all duration-300">
+                                                    <i class="fas fa-play text-white text-2xl ml-1"></i>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Video Duration Badge -->
+                                            <div class="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                                                <i class="fas fa-play-circle mr-1"></i> Watch Demo
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Slide 2 -->
+                                    <div class="slides">
+                                        <img src="projects/aqua2.png" 
+                                             alt="AquaTech Hardware Setup" 
+                                             class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Slide 3 -->
+                                    <div class="slides">
+                                        <img src="projects/aqua3.png" 
+                                             alt="AquaTech Hardware Setup" 
+                                             class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Slide 4 -->
+                                    <div class="slides">
+                                        <img src="projects/aqua5.jpg" 
+                                             alt="AquaTech Mobile App" 
+                                             class="w-full h-full object-cover">
+                                    </div>
+                                    
+                                    <!-- Navigation Arrows -->
+                                    <button class="prev" onclick="changeSlide('aquatech', -1)">❮</button>
+                                    <button class="next" onclick="changeSlide('aquatech', 1)">❯</button>
+                                    
+                                    <!-- Dots/Indicators -->
+                                    <div class="slideshow-controls">
+                                        <span class="dot active" onclick="currentSlide('aquatech', 0)"></span>
+                                        <span class="dot" onclick="currentSlide('aquatech', 1)"></span>
+                                        <span class="dot" onclick="currentSlide('aquatech', 2)"></span>
+                                        <span class="dot" onclick="currentSlide('aquatech', 3)"></span>
+                                    </div>
+                                    
+                                    <!-- Counter -->
+                                    <div class="slideshow-counter">
+                                        <span id="aquatech-counter">1</span>/4
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                            <!-- Water Parameter Indicators -->
+                            <div class="mt-6 grid grid-cols-5 gap-2">
+                                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                                    <i class="fas fa-tint text-cyan-400 text-xl mb-2"></i>
+                                    <p class="text-xs font-medium text-slate-300">pH Level</p>
+                                </div>
+                                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                                    <i class="fas fa-wind text-blue-400 text-xl mb-2"></i>
+                                    <p class="text-xs font-medium text-slate-300">DO Oxygen</p>
+                                </div>
+                                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                                    <i class="fas fa-temperature-high text-red-400 text-xl mb-2"></i>
+                                    <p class="text-xs font-medium text-slate-300">Temperature</p>
+                                </div>
+                                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                                    <i class="fas fa-vial text-emerald-400 text-xl mb-2"></i>
+                                    <p class="text-xs font-medium text-slate-300">TDS Purity</p>
+                                </div>
+                                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                                    <i class="fas fa-skull-crossbones text-red-400 text-xl mb-2"></i>
+                                    <p class="text-xs font-medium text-slate-300">NH₃ Ammonia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-2 md:order-2">
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-cyan-900/30 to-blue-800/20 text-cyan-300 mb-4">
+                            <span class="w-2 h-2 bg-cyan-500 rounded-full mr-2 animate-pulse"></span>
+                            Aquaculture IoT • Water Quality • Mobile App
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">AquaCrayTech: Smart Aquaculture Monitoring</h3>
+                        <p class="text-slate-400 mb-6">
+                            An IoT-based application with embedded system for real-time monitoring of water parameters (pH, temperature, dissolved oxygen, TDS, ammonia) in crayfish tanks with Telegram alert system.
+                        </p>
+                        
+                       <!-- Water Parameters Monitoring -->
+                        <div class="mb-6">
+                            <h4 class="font-bold text-white mb-4">Real-time Water Parameters Monitoring:</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-tint text-cyan-500 mr-3"></i>
+                                        <span class="text-slate-300">pH Level (Acidity/Alkalinity)</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-cyan-900/30 text-cyan-300 rounded text-sm">Critical: 6.5-8.0</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-wind text-blue-500 mr-3"></i>
+                                        <span class="text-slate-300">Dissolved Oxygen (DO) Level</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-sm">Optimal: >5mg/L</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-temperature-high text-red-500 mr-3"></i>
+                                        <span class="text-slate-300">Water Temperature</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-900/30 text-emerald-300 rounded text-sm">Normal: 20-28°C</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-vial text-emerald-500 mr-3"></i>
+                                        <span class="text-slate-300">Total Dissolved Solids (TDS)</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-900/30 text-emerald-300 rounded text-sm">Safe: <500ppm </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="px-3 py-1.5 bg-blue-900/30 text-blue-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-tint mr-2"></i>pH Sensor
+                            </span>
+                            <span class="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fab fa-telegram mr-2"></i>Telegram Bot
+                            </span>
+                            <span class="px-3 py-1.5 bg-red-900/30 text-red-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-temperature-high mr-2"></i>Temp Sensor
+                            </span>
+                            <span class="px-3 py-1.5 bg-green-900/30 text-green-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-database mr-2"></i>Cloud
+                            </span>
+                            <span class="px-3 py-1.5 bg-yellow-900/30 text-yellow-300 rounded-full text-sm font-medium flex items-center">
+                                <i class="fas fa-wifi mr-2"></i>WiFi
+                            </span>
+                        </div>
+                        
+                       <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="playAquatechVideo()" 
+                                    class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:opacity-90 transition-all font-medium inline-flex items-center">
+                                <i class="fas fa-play mr-2"></i> Watch Demo
+                            </button>
+                            <a href="https://www.facebook.com/share/p/1JDsNF5WV9/" 
+                            target="_blank"
+                            class="px-5 py-2.5 border-2 border-[#2D88FF] text-[#2D88FF] rounded-lg hover:bg-slate-800 transition-colors font-medium inline-flex items-center">
+                                <i class="fab fa-facebook mr-2"></i> View on Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ASF Detection project -->
+                  <div class="grid md:grid-cols-2 gap-8 items-center project-asf" data-aos="fade-up">
+    <div class="order-1 md:order-1">
+        <div class="relative overflow-hidden rounded-2xl shadow-2xl group">
+            <!-- Slideshow Container -->
+            <div class="aspect-video bg-gradient-to-br from-red-900 to-slate-900 relative overflow-hidden rounded-xl">
+                <!-- Slideshow -->
+                <div class="slideshow-container" id="asf-slides">
+                    <!-- Slide 1 (Video Thumbnail) -->
+                    <div class="slides active">
+                        <div class="relative w-full h-full">
+                            <!-- Video Thumbnail Image -->
+                            <img src="projects/matira1.png" 
+                                 alt="ASF Detection System" 
+                                 class="w-full h-full object-cover">
+                            
+                            <!-- Video Play Button Overlay -->
+                            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/40 via-transparent to-transparent cursor-pointer">
+                                <div onclick="playASFVideo()" 
+                                     class="play-button w-16 h-16 bg-red-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-red-600 hover:scale-110 transition-all duration-300">
+                                    <i class="fas fa-play text-white text-2xl ml-1"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Video Duration Badge -->
+                            <div class="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                                <i class="fas fa-play-circle mr-1"></i> Watch Demo
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="slides">
+                        <img src="projects/matira2.png" 
+                             alt="ASF Hardware Setup" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="slides">
+                        <img src="projects/matira3.png" 
+                             alt="ASF Sensor Array" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    
+                    
+                    <!-- Navigation Arrows -->
+                    <button class="prev" onclick="changeSlide('asf', -1)">❮</button>
+                    <button class="next" onclick="changeSlide('asf', 1)">❯</button>
+                    
+                    <!-- Dots/Indicators -->
+                    <div class="slideshow-controls">
+                        <span class="dot active" onclick="currentSlide('asf', 0)"></span>
+                        <span class="dot" onclick="currentSlide('asf', 1)"></span>
+                        <span class="dot" onclick="currentSlide('asf', 2)"></span>
+    
+                    </div>
+                    
+                    <!-- Counter -->
+                    <div class="slideshow-counter">
+                        <span id="asf-counter">1</span>/3
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sensor Indicators -->
+            <div class="mt-6 grid grid-cols-5 gap-2">
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-thermometer-half text-red-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Body Temp</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-heartbeat text-pink-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Heart Rate</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-palette text-purple-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Skin Color</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-running text-blue-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Motion</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-temperature-low text-green-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Env Temp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="order-2 md:order-2">
+        <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-red-900/30 to-pink-800/20 text-red-300 mb-4">
+            <span class="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span>
+            Animal Health IoT • Early Detection • Disease Prevention
+        </div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">ASF Detection System</h3>
+        <p class="text-slate-400 mb-6">
+            An IoT-based solution designed to detect early symptoms of African Swine Fever (ASF) using multiple sensors. This system enables real-time data collection, early detection, and proactive ASF prevention, enhancing disease control efforts.
+        </p>
+        
+        <!-- Symptom Monitoring -->
+        <div class="mb-6">
+            <h4 class="font-bold text-white mb-4">Early Symptom Detection Parameters:</h4>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-thermometer-half text-red-500 mr-3"></i>
+                        <span class="text-slate-300">Body Temperature (Fever Detection)</span>
+                    </div>
+                    <span class="px-2 py-1 bg-red-900/30 text-red-300 rounded text-sm">Critical: >40°C</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-heartbeat text-pink-500 mr-3"></i>
+                        <span class="text-slate-300">Heart Rate (BPM Changes)</span>
+                    </div>
+                    <span class="px-2 py-1 bg-pink-900/30 text-pink-300 rounded text-sm">Abnormal: ±20%</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-palette text-purple-500 mr-3"></i>
+                        <span class="text-slate-300">Skin Discoloration (Violet)</span>
+                    </div>
+                    <span class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded text-sm">Key ASF Indicator</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-running text-blue-500 mr-3"></i>
+                        <span class="text-slate-300">Activity Level (Motion Tracking)</span>
+                    </div>
+                    <span class="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-sm">Reduced Activity</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tech Stack -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1.5 bg-pink-900/30 text-pink-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-thermometer mr-2"></i>Temp Sensor
+            </span>
+            <span class="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-palette mr-2"></i>Color Sensor
+            </span>
+            <span class="px-3 py-1.5 bg-blue-900/30 text-blue-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-heartbeat mr-2"></i>Pulse Sensor
+            </span>
+            <span class="px-3 py-1.5 bg-green-900/30 text-green-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-satellite-dish mr-2"></i>Motion Sensor
+            </span>
+            <span class="px-3 py-1.5 bg-yellow-900/30 text-yellow-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-database mr-2"></i>DHT22
+            </span>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-4">
+            <button onclick="playASFVideo()" 
+                    class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:opacity-90 transition-all font-medium inline-flex items-center">
+                <i class="fas fa-play mr-2"></i> Watch Demo
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Project 4: EggWard Hatchery -->
+<div class="grid md:grid-cols-2 gap-8 items-center project-eggward" data-aos="fade-up">
+    <div class="order-1 md:order-1">
+        <div class="relative overflow-hidden rounded-2xl shadow-2xl group">
+            <!-- Slideshow Container -->
+            <div class="aspect-video bg-gradient-to-br from-yellow-900 to-slate-900 relative overflow-hidden rounded-xl">
+                <!-- Slideshow -->
+                <div class="slideshow-container" id="eggward-slides">
+                    <!-- Slide 1 (Video Thumbnail) -->
+                    <div class="slides active">
+                        <div class="relative w-full h-full">
+                            <!-- Video Thumbnail Image -->
+                            <img src="projects/incu1.jpg" 
+                                 alt="EggWard Project" 
+                                 class="w-full h-full object-cover">
+                            
+                            <!-- Video Play Button Overlay -->
+                            <!-- <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/40 via-transparent to-transparent cursor-pointer">
+                                <div onclick="playEggwardVideo()" 
+                                     class="play-button w-16 h-16 bg-yellow-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-yellow-600 hover:scale-110 transition-all duration-300">
+                                    <i class="fas fa-play text-white text-2xl ml-1"></i>
+                                </div>
+                            </div> -->
+                            
+                            <!-- Video Duration Badge -->
+                            <div class="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
+                                <i class="fas fa-play-circle mr-1"></i> Watch Demo
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="slides">
+                        <img src="projects/incu2.jpg" 
+                             alt="EggWard Incubator Setup" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="slides">
+                        <img src="projects/incu3.jpg" 
+                             alt="EggWard Temperature Monitoring" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="slides">
+                        <img src="projects/incu4.jpg" 
+                             alt="EggWard Manual Rotation" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <button class="prev" onclick="changeSlide('eggward', -1)">❮</button>
+                    <button class="next" onclick="changeSlide('eggward', 1)">❯</button>
+                    
+                    <!-- Dots/Indicators -->
+                    <div class="slideshow-controls">
+                        <span class="dot active" onclick="currentSlide('eggward', 0)"></span>
+                        <span class="dot" onclick="currentSlide('eggward', 1)"></span>
+                        <span class="dot" onclick="currentSlide('eggward', 2)"></span>
+                        <span class="dot" onclick="currentSlide('eggward', 3)"></span>
+                    </div>
+                    
+                    <!-- Counter -->
+                    <div class="slideshow-counter">
+                        <span id="eggward-counter">1</span>/4
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Incubation Parameter Indicators -->
+            <div class="mt-6 grid grid-cols-4 gap-2">
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-thermometer-half text-red-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Temperature</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-tint text-blue-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Humidity</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-clock text-green-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Incubation Days</p>
+                </div>
+                <div class="text-center p-3 bg-slate-800 rounded-lg">
+                    <i class="fas fa-hand-paper text-yellow-400 text-xl mb-2"></i>
+                    <p class="text-xs font-medium text-slate-300">Manual Rotation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="order-2 md:order-2">
+        <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-yellow-900/30 to-amber-800/20 text-yellow-300 mb-4">
+            <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2 animate-pulse"></span>
+            Incubation System • Temperature Control • Manual Operation
+        </div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">EggWard Hatchery: Customized Incubation System</h3>
+        <p class="text-slate-400 mb-6">
+            A customized incubation system with precise temperature and humidity monitoring to ensure optimal hatching conditions. Features manual egg rotation and controlled environment settings, improving hatch rates and making incubation more reliable and efficient.
+        </p>
+        
+        <!-- Incubation Parameters Monitoring -->
+        <div class="mb-6">
+            <h4 class="font-bold text-white mb-4">Precise Incubation Parameters Monitoring:</h4>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-thermometer-half text-red-500 mr-3"></i>
+                        <span class="text-slate-300">Temperature Precision</span>
+                    </div>
+                    <span class="px-2 py-1 bg-red-900/30 text-red-300 rounded text-sm">Critical: 37.5-37.8°C</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-tint text-blue-500 mr-3"></i>
+                        <span class="text-slate-300">Humidity Control</span>
+                    </div>
+                    <span class="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-sm">Optimal: 50-60% RH</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar-alt text-green-500 mr-3"></i>
+                        <span class="text-slate-300">Incubation Period</span>
+                    </div>
+                    <span class="px-2 py-1 bg-green-900/30 text-green-300 rounded text-sm">Standard: 21 days</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-hand-paper text-yellow-500 mr-3"></i>
+                        <span class="text-slate-300">Manual Egg Rotation</span>
+                    </div>
+                    <span class="px-2 py-1 bg-yellow-900/30 text-yellow-300 rounded text-sm">2 times daily</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tech Stack -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1.5 bg-yellow-900/30 text-yellow-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-thermometer mr-2"></i>Temperature Controller
+            </span>
+            <span class="px-3 py-1.5 bg-red-900/30 text-red-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-temperature-high mr-2"></i>Heating Element
+            </span>
+            <span class="px-3 py-1.5 bg-green-900/30 text-green-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-fan mr-2"></i>Ventilation Fan
+            </span>
+            <span class="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-sm font-medium flex items-center">
+                <i class="fas fa-tachometer-alt mr-2"></i>Thermostat
+            </span>
+        </div>
+        
+        <!-- Action Buttons -->
+        <!-- <div class="flex flex-wrap gap-4">
+            <button onclick="playEggwardVideo()" 
+                    class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:opacity-90 transition-all font-medium inline-flex items-center">
+                <i class="fas fa-play mr-2"></i> Watch Demo
+            </button>
+        </div> -->
+    </div>
+</div>
+
+
+            </div>
+            
+            <!-- View All Projects -->
+            <!-- <div class="text-center mt-16" data-aos="fade-up">
+                <a href="#" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:opacity-90 transition-all font-medium shadow-lg hover:shadow-xl">
+                    <i class="fas fa-briefcase mr-2"></i> View Complete Portfolio
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Local Video Modal -->
+    <div id="localVideoModal" class="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center hidden p-4">
+        <div class="relative w-full max-w-4xl">
+            <button onclick="closeLocalVideoModal()" 
+                    class="absolute -top-12 right-0 text-white text-2xl hover:text-primary transition-colors z-10 bg-black/50 rounded-full p-2">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
+                <video id="modalLocalVideo" 
+                       class="w-full h-full"
+                       controls
+                       controlsList="nodownload">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div id="videoTitle" class="text-white text-xl font-semibold mt-4 text-center"></div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-slate-800/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Technical Skills</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    Technologies and tools we use to build innovative IoT solutions.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Hardware Skills -->
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-up">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-microchip text-emerald-500 mr-3"></i> Hardware
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Arduino</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">ESP32/8266</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Sensors & Modules</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Circuit Prototyping</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Programming Languages -->
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-code text-blue-500 mr-3"></i> Programming
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">C/C++</span>
+                                <span class="text-slate-300 font-medium">4+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">JavaScript</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                         <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Python</span>
+                                <span class="text-slate-300 font-medium">2+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">PHP</span>
+                                <span class="text-slate-300 font-medium">2+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Web Development -->
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-globe text-purple-500 mr-3"></i> Web Development
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Frontend (HTML/CSS/JS)</span>
+                                <span class="text-slate-300 font-medium">4+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Node.js</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">REST APIs</span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300">Databases (SQL/NoSQL) </span>
+                                <span class="text-slate-300 font-medium">3+ Years</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IoT Protocols -->
+                <div class="bg-slate-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-broadcast-tower text-cyan-500 mr-3"></i> IoT Protocols
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-emerald-900/30 text-emerald-300 rounded-lg">MQTT</span>
+                        <span class="px-3 py-2 bg-blue-900/30 text-blue-300 rounded-lg">HTTP/WebSocket</span>
+                        <span class="px-3 py-2 bg-purple-900/30 text-purple-300 rounded-lg">Bluetooth</span>
+                        <span class="px-3 py-2 bg-cyan-900/30 text-cyan-300 rounded-lg">WiFi</span>
+                        <span class="px-3 py-2 bg-yellow-900/30 text-yellow-300 rounded-lg">LoRa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hire Me Section -->
+    <section id="hire" class="py-20 bg-gradient-to-r from-emerald-600 to-blue-600">
+        <div class="container mx-auto px-6 text-center">
+            <div data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Start Your IoT Project?</h2>
+                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                    Let's work together to create innovative IoT solutions that solve real-world problems.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contact" class="px-8 py-4 bg-white text-emerald-600 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-calendar-check mr-2"></i>Schedule a Consultation
+                    </a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=create.ctrlstudioz@gmail.com&su=CtrlStudioz%20Inquiry&body=Hello%20CtrlStudioz%20Team,%0D%0A%0D%0AI%20am%20interested%20in%20your%20IoT%20and%20embedded%20systems%20services.%0D%0A%0D%0AProject%20Details:%0D%0A%0D%0A"
+                        target="_blank" class="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>Send Quick Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Get In Touch</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    Have a project in mind? Let's discuss how we can bring your idea to life.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-emerald-900/30 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-emerald-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Email</h4>
+                                <p class="text-slate-400">create.ctrlstudioz@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-900/30 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fab fa-facebook text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Facebook Page</h4>
+                                <p class="text-slate-400">CtrlStudioz</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-900/30 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Location</h4>
+                                <p class="text-slate-400">Oriental Mindoro, Philippines</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="font-bold text-white mb-4">Typical Response Time</h4>
+                        <p class="text-slate-400">
+                            <i class="fas fa-clock text-emerald-500 mr-2"></i>
+                            Within 24 hours for project inquiries
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-white mb-4">Connect with me</h4>
+                        <div class="flex gap-4">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=create.ctrlstudioz@gmail.com&su=CtrlStudioz%20Inquiry&body=Hello%20CtrlStudioz%20Team,%0D%0A%0D%0AI%20am%20interested%20in%20your%20IoT%20and%20embedded%20systems%20services.%0D%0A%0D%0AProject%20Details:%0D%0A%0D%0A"
+                            target="_blank" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-colors">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://www.facebook.com/CtrlStudioz" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <!-- Remove the form element and replace with a div -->
+                    <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
+                        <div class="mb-6">
+                            <label for="name" class="block text-slate-300 mb-2">Your Name *</label>
+                            <input type="text" id="name" required
+                                   class="w-full px-4 py-3 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-slate-700 text-white">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-slate-300 mb-2">Email Address *</label>
+                            <input type="email" id="email" required
+                                   class="w-full px-4 py-3 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-slate-700 text-white">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="projectType" class="block text-slate-300 mb-2">Project Type *</label>
+                            <select id="projectType" required
+                                    class="w-full px-4 py-3 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-slate-700 text-white">
+                                <option value="">Select project type</option>
+                                <option value="IoT">IoT Development</option>
+                                <option value="Embedded">Embedded Systems</option>
+                                <option value="Web App">Web Application</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-slate-300 mb-2">Project Details *</label>
+                            <textarea id="message" rows="5" required placeholder="Describe your project, requirements, and timeline..."
+                                      class="w-full px-4 py-3 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-slate-700 text-white"></textarea>
+                        </div>
+                        
+                        <!-- Fixed button -->
+                        <button onclick="openGmailCompose()"
+                                class="w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message via Gmail
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-2">
+                        <i class="fas fa-microchip text-blue-400 mr-2"></i>CtrlStudioz
+                    </h3>
+                    <p class="text-slate-400">Turning ideas into smart, connected solutions.</p>
+                </div>
+                
+                <div class="flex gap-6 mb-6 md:mb-0">
+                    <a href="#home" class="text-slate-400 hover:text-white transition-colors">Home</a>
+                    <a href="#services" class="text-slate-400 hover:text-white transition-colors">Services</a>
+                    <a href="#projects" class="text-slate-400 hover:text-white transition-colors">Projects</a>
+                    <a href="#contact" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">
+                <p class="mt-2">
+                    <i class="fas fa-code text-emerald-400 mx-1"></i>
+                    Dev | Build | Deploy
+                    <i class="fas fa-bolt text-yellow-400 mx-1"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuLinks = mobileMenu.querySelectorAll('a');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize Particles.js
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 60, density: { enable: true, value_area: 800 } },
+                    color: { value: "#10b981" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#10b981",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" }
+                    }
+                }
+            });
+        }
+
+        // Function to open Gmail with contact form data
+        function openGmailCompose() {
+            const name = document.getElementById('name')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const projectType = document.getElementById('projectType')?.value || 'Not specified';
+            const message = document.getElementById('message')?.value || '';
+            
+            // Validate required fields
+            if (!name.trim()) {
+                alert('Please enter your name.');
+                document.getElementById('name').focus();
+                return;
+            }
+            
+            if (!email.trim()) {
+                alert('Please enter your email address.');
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            if (!projectType) {
+                alert('Please select a project type.');
+                document.getElementById('projectType').focus();
+                return;
+            }
+            
+            if (!message.trim()) {
+                alert('Please describe your project.');
+                document.getElementById('message').focus();
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            // Construct the email body (without extra encoding here)
+            const emailBody = 
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Project Type: ${projectType}\n\n` +
+                `Project Details:\n${message}\n\n` +
+                `---\n` +
+                `Sent via CtrlStudioz Website`;
+            
+            const subject = `CtrlStudioz Project Inquiry: ${projectType}`;
+            
+            // Create the Gmail URL with proper encoding
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=create.ctrlstudioz@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Try to open Gmail in new tab
+            const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+            
+            if (newWindow) {
+                // Success - clear form after a short delay
+                setTimeout(() => {
+                    // Clear form fields
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('projectType').value = '';
+                    document.getElementById('message').value = '';
+                    
+                    // Optional: Show confirmation
+                    alert('Gmail compose window opened! Please review and send the email.');
+                }, 1000);
+            } else {
+                // If popup blocked, show fallback option
+                alert('Please copy this information and email it to create.ctrlstudioz@gmail.com:\n\n' + 
+                      `Subject: ${subject}\n\n` +
+                      `${emailBody}\n\n` +
+                      'Or click OK to try again with popup allowed.');
+            }
+        }
+
+        // Alternative function for simple email (without form data)
+        function openQuickGmail() {
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=create.ctrlstudioz@gmail.com&su=${encodeURIComponent('CtrlStudioz Inquiry')}&body=${encodeURIComponent('Hello CtrlStudioz Team,\n\nI am interested in your IoT and embedded systems services.\n\nProject Details:\n\n')}`;
+            window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        // Copy email to clipboard
+        function copyEmail() {
+            const email = 'create.ctrlstudioz@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                alert('Email copied to clipboard: ' + email);
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Email copied to clipboard: ' + email);
+            });
+        }
+
+        // Typing effect
+        const typewriterElements = document.querySelectorAll('.typewriter');
+        typewriterElements.forEach(element => {
+            const text = element.textContent;
+            element.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            // Start typing after a delay
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Local Video Functions
+function openLocalVideoModal(videoSrc, title = 'Project Demo') {
+    const modal = document.getElementById('localVideoModal');
+    const video = document.getElementById('modalLocalVideo');
+    const videoTitle = document.getElementById('videoTitle');
+    
+    // Set video source
+    video.src = videoSrc;
+    
+    // Set title
+    videoTitle.textContent = title;
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Play video when modal opens
+    video.onloadeddata = function() {
+        video.play().catch(e => console.log('Auto-play prevented:', e));
+    };
+    
+    // Pause all other videos
+    document.querySelectorAll('video[id$="-preview"]').forEach(v => {
+        if (v !== video) {
+            v.pause();
+            v.controls = false;
+            const overlay = v.parentElement.querySelector('.video-overlay');
+            if (overlay) overlay.style.opacity = '1';
+        }
+    });
+}
+
+function closeLocalVideoModal() {
+    const modal = document.getElementById('localVideoModal');
+    const video = document.getElementById('modalLocalVideo');
+    
+    // Pause video
+    video.pause();
+    video.src = '';
+    
+    // Hide modal
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Initialize video functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listeners to all video previews
+    const videos = document.querySelectorAll('video[id$="-preview"]');
+    
+    videos.forEach(video => {
+        // Hide controls when video ends
+        video.addEventListener('ended', function() {
+            this.controls = false;
+            const overlay = this.parentElement.querySelector('.video-overlay');
+            if (overlay) overlay.style.opacity = '1';
+        });
+        
+        // Try to get video duration when metadata loads
+        video.addEventListener('loadedmetadata', function() {
+            const durationElement = this.parentElement.querySelector('.video-duration');
+            if (durationElement && !isNaN(this.duration)) {
+                const minutes = Math.floor(this.duration / 60);
+                const seconds = Math.floor(this.duration % 60);
+                durationElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        });
+    });
+    
+    // Close modal when clicking outside
+    document.getElementById('localVideoModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLocalVideoModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !document.getElementById('localVideoModal').classList.contains('hidden')) {
+            closeLocalVideoModal();
+        }
+    });
+});
+
+// Slideshow Variables
+let greenwardSlideIndex = 0;
+let greenwardSlideInterval;
+let aquatechSlideIndex = 0;
+let aquatechSlideInterval;
+let asfSlideIndex = 0;
+let asfSlideInterval;
+let eggwardSlideIndex = 0;
+let eggwardSlideInterval;
+
+
+// Initialize Slideshows
+function initSlideshows() {
+    // Start GreenWard slideshow
+    startGreenwardSlideshow();
+    
+    // Start AquaTech slideshow
+    startAquatechSlideshow();
+    
+    // Start ASF slideshow
+    startASFSlideshow();
+
+     // Start EggWard slideshow
+    startEggwardSlideshow();
+}
+
+// Add EggWard slideshow functions
+function startEggwardSlideshow() {
+    clearInterval(eggwardSlideInterval);
+    eggwardSlideInterval = setInterval(() => {
+        changeSlide('eggward', 1);
+    }, 4000);
+}
+
+// GreenWard Slideshow Functions
+function startGreenwardSlideshow() {
+    clearInterval(greenwardSlideInterval);
+    greenwardSlideInterval = setInterval(() => {
+        changeSlide('greenward', 1);
+    }, 4000);
+}
+
+function startAquatechSlideshow() {
+    clearInterval(aquatechSlideInterval);
+    aquatechSlideInterval = setInterval(() => {
+        changeSlide('aquatech', 1);
+    }, 4000);
+}
+
+function startASFSlideshow() {
+    clearInterval(asfSlideInterval);
+    asfSlideInterval = setInterval(() => {
+        changeSlide('asf', 1);
+    }, 4000);
+}
+
+function changeSlide(project, direction) {
+    if (project === 'greenward') {
+        showGreenwardSlide(greenwardSlideIndex + direction);
+    } else if (project === 'aquatech') {
+        showAquatechSlide(aquatechSlideIndex + direction);
+    } else if (project === 'asf') {
+        showASFSlide(asfSlideIndex + direction);
+    } else if (project === 'eggward') {
+        showEggwardSlide(eggwardSlideIndex + direction);
+    }
+}
+
+function currentSlide(project, index) {
+    if (project === 'greenward') {
+        showGreenwardSlide(index);
+    } else if (project === 'aquatech') {
+        showAquatechSlide(index);
+    } else if (project === 'asf') {
+        showASFSlide(index);
+    } else if (project === 'eggward') {
+        showEggwardSlide(index);
+    }
+}
+
+// Add EggWard slide show function
+function showEggwardSlide(n) {
+    const slides = document.querySelectorAll('.project-eggward .slides');
+    const dots = document.querySelectorAll('.project-eggward .dot');
+    const counter = document.getElementById('eggward-counter');
+    
+    if (!slides.length) return;
+    
+    if (n >= slides.length) n = 0;
+    if (n < 0) n = slides.length - 1;
+    
+    eggwardSlideIndex = n;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+    if (counter) counter.textContent = n + 1;
+    
+    // Reset interval
+    clearInterval(eggwardSlideInterval);
+    eggwardSlideInterval = setInterval(() => {
+        showEggwardSlide(eggwardSlideIndex + 1);
+    }, 4000);
+}
+
+function showGreenwardSlide(n) {
+    const slides = document.querySelectorAll('.project-greenward .slides');
+    const dots = document.querySelectorAll('.project-greenward .dot');
+    const counter = document.getElementById('greenward-counter');
+    
+    if (!slides.length) return;
+    
+    if (n >= slides.length) n = 0;
+    if (n < 0) n = slides.length - 1;
+    
+    greenwardSlideIndex = n;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+    if (counter) counter.textContent = n + 1;
+    
+    // Reset interval
+    clearInterval(greenwardSlideInterval);
+    greenwardSlideInterval = setInterval(() => {
+        showGreenwardSlide(greenwardSlideIndex + 1);
+    }, 4000);
+}
+
+function showAquatechSlide(n) {
+    const slides = document.querySelectorAll('.project-aquatech .slides');
+    const dots = document.querySelectorAll('.project-aquatech .dot');
+    const counter = document.getElementById('aquatech-counter');
+    
+    if (!slides.length) return;
+    
+    if (n >= slides.length) n = 0;
+    if (n < 0) n = slides.length - 1;
+    
+    aquatechSlideIndex = n;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+    if (counter) counter.textContent = n + 1;
+    
+    // Reset interval
+    clearInterval(aquatechSlideInterval);
+    aquatechSlideInterval = setInterval(() => {
+        showAquatechSlide(aquatechSlideIndex + 1);
+    }, 4000);
+}
+
+function showASFSlide(n) {
+    const slides = document.querySelectorAll('.project-asf .slides');
+    const dots = document.querySelectorAll('.project-asf .dot');
+    const counter = document.getElementById('asf-counter');
+    
+    if (!slides.length) return;
+    
+    if (n >= slides.length) n = 0;
+    if (n < 0) n = slides.length - 1;
+    
+    asfSlideIndex = n;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+    if (counter) counter.textContent = n + 1;
+    
+    // Reset interval
+    clearInterval(asfSlideInterval);
+    asfSlideInterval = setInterval(() => {
+        showASFSlide(asfSlideIndex + 1);
+    }, 4000);
+}
+
+// Play GreenWard Video
+function playGreenwardVideo() {
+    // Pause slideshow
+    clearInterval(greenwardSlideInterval);
+    
+    // Open the video in modal
+    openLocalVideoModal('projects/greenward.mp4', 'GreenWard: IoT Forest Protection System Demo');
+    
+    // Restart slideshow when video modal closes
+    const video = document.getElementById('modalLocalVideo');
+    
+    video.onended = function() {
+        startGreenwardSlideshow();
+    };
+}
+
+// Play AquaTech Video
+function playAquatechVideo() {
+    // Pause slideshow
+    clearInterval(aquatechSlideInterval);
+    
+    // Open the video in modal
+    openLocalVideoModal('projects/AquaCrayTech.mp4', 'AquaTech: Smart Aquaculture Monitoring Demo');
+    
+    // Restart slideshow when video modal closes
+    const video = document.getElementById('modalLocalVideo');
+    
+    video.onended = function() {
+        startAquatechSlideshow();
+    };
+}
+
+// Play ASF Video
+function playASFVideo() {
+    // Pause slideshow
+    clearInterval(asfSlideInterval);
+    
+    // Open the video in modal - Update the video path as needed
+    openLocalVideoModal('projects/ASF.mp4', 'ASF Detection: African Swine Fever Monitoring System Demo');
+    
+    // Restart slideshow when video modal closes
+    const video = document.getElementById('modalLocalVideo');
+    
+    video.onended = function() {
+        startASFSlideshow();
+    };
+}
+
+// Update modal close to restart all slideshows
+const originalCloseLocalVideoModal = closeLocalVideoModal;
+closeLocalVideoModal = function() {
+    originalCloseLocalVideoModal();
+    startGreenwardSlideshow();
+    startAquatechSlideshow();
+    startASFSlideshow();
+};
+
+// Initialize slideshows when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initSlideshows();
+});
+
+// Pause slideshows when user hovers over them (optional enhancement)
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover pause for GreenWard
+    const greenwardSlideshow = document.querySelector('.project-greenward .slideshow-container');
+    if (greenwardSlideshow) {
+        greenwardSlideshow.addEventListener('mouseenter', function() {
+            clearInterval(greenwardSlideInterval);
+        });
+        greenwardSlideshow.addEventListener('mouseleave', function() {
+            startGreenwardSlideshow();
+        });
+    }
+    
+    // Add hover pause for AquaTech
+    const aquatechSlideshow = document.querySelector('.project-aquatech .slideshow-container');
+    if (aquatechSlideshow) {
+        aquatechSlideshow.addEventListener('mouseenter', function() {
+            clearInterval(aquatechSlideInterval);
+        });
+        aquatechSlideshow.addEventListener('mouseleave', function() {
+            startAquatechSlideshow();
+        });
+    }
+    
+    // Add hover pause for ASF
+    const asfSlideshow = document.querySelector('.project-asf .slideshow-container');
+    if (asfSlideshow) {
+        asfSlideshow.addEventListener('mouseenter', function() {
+            clearInterval(asfSlideInterval);
+        });
+        asfSlideshow.addEventListener('mouseleave', function() {
+            startASFSlideshow();
+        });
+    }
+});
+
+    </script>
+</body>
+</html>
